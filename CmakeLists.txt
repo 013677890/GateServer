@@ -1,0 +1,24 @@
+cmake_minimum_required(VERSION 3.18)
+
+project(server LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_executable(server main.cpp CServer.h CServer.cpp global.h
+    HttpConnection.h HttpConnection.cpp
+    Singleton.h
+    LogicSystem.h LogicSystem.cpp
+    )
+
+# vcpkg 会自动找到这些包
+# 查找 Beast 会自动处理 Asio
+find_package(Boost REQUIRED COMPONENTS Beast)
+find_package(spdlog REQUIRED)
+find_package(jsoncpp REQUIRED)
+
+target_link_libraries(server PRIVATE
+    Boost::beast
+    spdlog::spdlog
+    JsonCpp::JsonCpp
+)
