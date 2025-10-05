@@ -6,12 +6,12 @@ LogicSystem::~LogicSystem() {
 }
 
 LogicSystem::LogicSystem() {
-    spdlog::info("LogicSystem destroyed.");
+    spdlog::info("LogicSystem 初始化");
     RegGet("/get_test", [](const std::shared_ptr<HttpConnection> conn) {
         boost::beast::ostream(conn->_res.body())
             << "This is a test response from /get_test endpoint.\r\n";
     });
-    spdlog::info("Registered /get_test handler.");
+    spdlog::info("注册 /get_test 处理.");
 }
 
 bool LogicSystem::HandleGet(std::string path, std::shared_ptr<HttpConnection> conn) {

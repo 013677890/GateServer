@@ -16,18 +16,18 @@ void CServer::Start()
         {
             try {
                 if (ec) {
-                    spdlog::error("Accept error: {}", ec.message());
+                    spdlog::error("接受连接失败: {}", ec.message());
                     self->Start(); // 继续接受下一个连接
                     return;
                 }
                 // 创建并启动新的连接处理对象
                 std::make_shared<HttpConnection>(std::move(self->_socket))->Start();
-                spdlog::info("New connection accepted");
+                spdlog::info("新连接已接受。");
                 self->Start(); // 继续接受下一个连接
             }
             catch (const std::exception& ex) {
                 // 处理异常，记录日志
-                spdlog::error("Accept error: {}", ex.what());
+                spdlog::error("接受连接时发生错误: {}", ex.what());
             }
         });
 }

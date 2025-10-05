@@ -28,7 +28,7 @@ int main() {
     spdlog::set_pattern("%Y-%m-%d %H:%M:%S.%e [%l] %v");
     spdlog::flush_on(spdlog::level::err);
 
-    spdlog::info("async logger started");
+    spdlog::info("日志启动");
 
     // 程序主逻辑放这里
     try {
@@ -40,7 +40,7 @@ int main() {
         // 3. 异步等待信号。当信号发生时，调用 ioc.stop()
         signals.async_wait([&ioc](const boost::system::error_code& error, int signal_number) {
             if (!error) {
-                spdlog::info("Shutdown signal ({}) received. Stopping server...", signal_number);
+                spdlog::info("收到关闭信号: ({}),正在关闭服务器...", signal_number);
                 ioc.stop();
             }
         });
@@ -49,20 +49,20 @@ int main() {
         auto server = std::make_shared<CServer>(ioc, 12345);
         server->Start();
 
-        spdlog::info("Server started on port 12345. Press Ctrl+C to exit.");
+        spdlog::info("服务器已启动，监听端口 12345。按 Ctrl+C 退出。");
 
         // 运行 io_context 事件循环，这将阻塞直到 ioc.stop() 被调用
         ioc.run();
 
-        spdlog::info("Server stopped.");
+        spdlog::info("服务器已停止。");
     }
     catch (const std::exception& ex) {
-        spdlog::critical("Server run failed: {}", ex.what());
+        spdlog::critical("服务器运行失败: {}", ex.what());
     }
 
 
     // 退出前清理
-    spdlog::info("Shutting down logger...");
+    spdlog::info("正在关闭日志...");
     spdlog::shutdown();
     return 0;
 }

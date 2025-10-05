@@ -20,7 +20,7 @@ void HttpConnection::Start()
         {
             try {
                 if (ec) {
-                    spdlog::error("Read error: {}", ec.message());
+                    spdlog::error("读取请求时发生错误: {}", ec.message());
                     return;
                 }
                 boost::ignore_unused(bytes_transferred);//http服务器可以忽略已发送的字节数（不需要粘包处理
@@ -30,7 +30,7 @@ void HttpConnection::Start()
             }
             catch (const std::exception& ex) {
                 // 处理异常，记录日志
-                spdlog::error("Read error: {}", ex.what());
+                spdlog::error("读取请求时发生错误: {}", ex.what());
             }
         });
 }
@@ -86,6 +86,7 @@ void HttpConnection::CheckTimeout()
             if(!ec) {
                 // 超时，关闭连接
                 self->_socket.close(ec);
+                spdlog::info("连接超时，已关闭。");
             }
         });
 }

@@ -6,6 +6,9 @@
         "iostream": "cpp",
         "ostream": "cpp",
         "functional": "cpp",
-        "memory": "cpp"
+        "memory": "cpp",
+        "any": "cpp",
+        "optional": "cpp",
+        "variant": "cpp"
     }
 }
