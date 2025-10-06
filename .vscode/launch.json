@@ -1,0 +1,37 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) 启动调试",
+            "type": "cppdbg",
+            "request": "launch",
+            // "program" 指向你的可执行文件。CMake 通常会把它放在 build 目录下。
+            "program": "${workspaceFolder}/build/server",
+            "args": [],
+            "stopAtEntry": false,
+            // "cwd" (当前工作目录) 设为 build 目录，确保日志文件能正确生成。
+            "cwd": "${workspaceFolder}/build",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "将反汇编风格设置为 Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            // "preLaunchTask" 会在每次启动调试前自动运行构建任务，确保你调试的是最新代码。
+            // 这需要你已经配置了名为 "build" 的构建任务（CMake Tools 扩展会自动提供）。
+            "preLaunchTask": "build"
+        }
+    ]
+}

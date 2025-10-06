@@ -5,6 +5,7 @@
 #include <spdlog/sinks/basic_file_sink.h>
 #include "CServer.h" // 包含服务器头文件
 #include <boost/asio/signal_set.hpp> // 1. 包含 signal_set 头文件
+#include "LogicSystem.h" // 包含逻辑系统头文件
 
 int main() {
     // 确保目录存在
@@ -32,6 +33,12 @@ int main() {
 
     // 程序主逻辑放这里
     try {
+        //初始化
+        if (!LogicSystem::get_instance()->Init()) {
+            spdlog::critical("逻辑系统初始化失败！");
+            return 1;
+        }
+
         boost::asio::io_context ioc;
 
         // 2. 创建一个 signal_set 来捕获 SIGINT 和 SIGTERM 信号
@@ -48,6 +55,8 @@ int main() {
         // 创建服务器实例，监听 12345 端口
         auto server = std::make_shared<CServer>(ioc, 12345);
         server->Start();
+
+        std::cout << "服务器已启动，监听端口 12345。按 Ctrl+C 退出。" << std::endl;
 
         spdlog::info("服务器已启动，监听端口 12345。按 Ctrl+C 退出。");
 

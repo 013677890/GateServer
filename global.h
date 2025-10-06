@@ -10,4 +10,15 @@
 #include <memory>
 #include <functional>
 #include <map>
+#include <unordered_map>
 #include "Singleton.h"
+#include <iostream>
+#include <json/json.h> // JSON 库头文件
+#include <json/value.h>
+#include <json/reader.h>
+
+enum ERROR_CODE {
+    ERROR_SUCCESS = 0,
+    ERROR_JSON = 1001,
+    ERROR_RPCFAILED = 1002,
+};
